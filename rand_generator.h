@@ -36,6 +36,8 @@ public:
 	Random_number_generator(index_type rand_numbers) 
 		: rand_container(new std::vector<T>(rand_numbers)), rand_count(rand_numbers) {}
 	~Random_number_generator() = default;
+	Random_number_generator(const Random_number_generator& rhs) = delete;
+	Random_number_generator& operator=(const Random_number_generator& rhs) = delete;
 	std::tuple<index_type, std::pair<typename std::vector<T>::iterator, typename std::vector<T>::iterator>>
 		get_random_numbers(T, T);
 	T& operator[](index_type i) { return (*rand_container)[i]; }
