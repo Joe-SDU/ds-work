@@ -16,9 +16,9 @@
 			2. 提供对外的迭代器， 允许标准库算法对随机数进行操作， 迭代器是随机访问迭代器。
 			3. 内置了一系列对随机数进行操作的方法。
 
-	3. 生成的随机数序号:
-			1. (0): 生成cnt个随机整数, 范围是[low, high];
-			2. (1): 生成cnt个随机实数, 范围是[low, high];
+	3. 生成的随机数规则:
+			1. (定义一个int实例化的类对象): 生成cnt个随机整数, 范围是[low, high];
+			2. (定义一个double实例化的类对象): 生成cnt个随机实数, 范围是[low, high];
 
 */
 
@@ -34,7 +34,7 @@ public:
 	friend std::ostream& operator<<<T>(std::ostream&, Random_number_generator&);
 	typedef typename std::vector<T>::size_type index_type;
 	Random_number_generator(index_type rand_numbers) 
-		: rand_container(new std::vector<T>()), rand_count(rand_numbers) {}
+		: rand_container(new std::vector<T>(rand_numbers)), rand_count(rand_numbers) {}
 	~Random_number_generator() = default;
 	std::tuple<index_type, std::pair<typename std::vector<T>::iterator, typename std::vector<T>::iterator>>
 		get_random_numbers(T, T);
@@ -66,13 +66,13 @@ Random_number_generator<T>::get_random_numbers(T low, T high)
 	{
 		static std::uniform_real_distribution<> u(low, high);
 		for (index_type i = 0; i < rand_count; i++)
-			rand_container->push_back(u(e));
+			(*rand_container)[i] = u(e);
 	}
 	else if (typeid(T) == typeid(int))
 	{
 		static std::uniform_int_distribution<> u(low, high);
 		for (index_type i = 0; i < rand_count; i++)
-			rand_container->push_back(u(e));
+			(*rand_container)[i] = u(e);
 	}
 	else throw std::runtime_error("illegal type for generating!");
 
