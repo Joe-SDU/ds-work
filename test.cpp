@@ -1,17 +1,15 @@
 #include <iostream>
-#include <string>
-#include <vector>
-#include "arrayList.h"
+#include "rand_generator.h"
 
 using namespace std;
 
 int main()
 {
-	arrayList<string> a;
-	a.emplace_back("abcde");
-	a.emplace_back(10, 'r');
+	Random_number_generator<double> a(10);
 
-	for (auto x = a.begin(); x != a.end(); x++) cout << *x;
+	a.get_random_numbers(0, 100);
+
+	cout << a;
 
 	return 0;
 }
